@@ -11,6 +11,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.util.List;
 
@@ -28,6 +29,11 @@ class ChromeTest {
     @BeforeEach // выполняется перед каждым тестом
     public void setupTest() { // перед каждым тестом создаём хром драйвер
         driver = new ChromeDriver(); // инициализируем поле драйвер новым экземпляром класса
+        ChromeOptions options = new ChromeOptions(); // в режиме headless мы отключаем графический интерфейс браузера (при этот все процессы браузера продолжают работать так же)
+        options.addArguments("--disable-dev-shm-usage");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--headless");
+        driver = new ChromeDriver(options);
     }
 
     @AfterEach // выполняется после каждого теста
@@ -55,7 +61,7 @@ class ChromeTest {
         driver.findElement(By.cssSelector(".checkbox__box")).click(); // находим поле чек-бокс через cssSelector по классу и делаем клик по нему
         driver.findElement(By.cssSelector("button")).click(); // находим поле кнопки "Продолжить" через cssSelector по имени тега и делаем клик по ней
         // проверяем что получили уведомление "Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время."
-        String actualText = driver.findElement(By.cssSelector("[data-test-id = 'order-success'] input")).getText().trim(); // необходимо найти элемент и получить у него текст. Сохраняем полученный текст в переменную actualText. trim - обрезает лишние пробелы в тексте
+        String actualText = driver.findElement(By.cssSelector("[data-test-id = 'order-success']")).getText().trim(); // необходимо найти элемент и получить у него текст. Сохраняем полученный текст в переменную actualText. trim - обрезает лишние пробелы в тексте
         String expected = "Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время."; // ожидаемый результат
         assertEquals(expected, actualText, "Текст сообщения не совпадает"); // сравниваем ОР и ФР
     }
