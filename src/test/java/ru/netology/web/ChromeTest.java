@@ -1,19 +1,15 @@
 package ru.netology.web;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.apache.hc.core5.http.io.SessionOutputBuffer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -44,7 +40,7 @@ class ChromeTest {
     }
 
     @Test
-    public void shouldSendForm() throws InterruptedException {
+    public void shouldSendForm() {
         driver.get("http://localhost:9999"); // открываем страницу которую собираемся тестировать
 
 //        System.out.println(""); // проверка что браузер Хром запускается и открывает localhost
