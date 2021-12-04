@@ -38,20 +38,24 @@ class ChromeTest {
     }
 
     @Test
-    public void shouldSendForm() {
+    public void shouldSendForm() throws InterruptedException {
         driver.get("http://localhost:9999"); // открываем страницу которую собираемся тестировать
+
 //        System.out.println(""); // проверка что браузер Хром запускается и открывает localhost
 //        driver.findElement().sendKeys("Анатолий"); // находим поле (элемент) для имени и в этот элемент передаём имя
 //        driver.findElement().sendKeys("+79375566778"); // находим поле (элемент) для номера телефона и в этот элемент передаём номер
 
-        List<WebElement> textFields = driver.findElements(By.className("input__control")); // находим все поля по названию класса. Сохраним результат в список WebElement и назовём его textFields
-        textFields.get(0).sendKeys("Анатолий"); // обращаемся к полученному результату по индексному порядку (первый по списку)
-        textFields.get(1).sendKeys("+79375566778"); // обращаемся к полученному результату по индексному порядку (второй по списку)
+        driver.findElement(By.cssSelector("[type = 'text']")).sendKeys("Анатолий"); // находим поле (элемент) через cssSelector по атрибуту text и в этот элемент передаём имя
+        driver.findElement(By.cssSelector("[type = 'tel']")).sendKeys("+79375566778"); // находим поле (элемент) через cssSelector по атрибуту tel и в этот элемент передаём номер
 
-        driver.findElement(By.className("checkbox__box")).click(); // находим чек-бокс и делаем клик по нему
-        driver.findElement(By.tagName("button")).click(); // находим кнопку "Продолжить" и делаем клик по ней
-        // проверяем что получили надпись "Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время."
-        String actualText = driver.findElement(By.className("order-success")).getText().trim(); // необходимо найти элемент и получить у него текст. Сохраняем полученный текст в переменную actualText, где trim - обрезает лишние пробелы в тексте
+//        List<WebElement> textFields = driver.findElements(By.className("input__control")); // находим все поля по названию класса. Сохраним результат в список WebElement и назовём его textFields
+//        textFields.get(0).sendKeys("Анатолий"); // обращаемся к полученному результату по индексному порядку (первый по списку)
+//        textFields.get(1).sendKeys("+79375566778"); // обращаемся к полученному результату по индексному порядку (второй по списку)
+
+        driver.findElement(By.cssSelector(".checkbox__box")).click(); // находим поле чек-бокс через cssSelector по классу и делаем клик по нему
+        driver.findElement(By.cssSelector("button")).click(); // находим поле кнопки "Продолжить" через cssSelector по имени тега и делаем клик по ней
+        // проверяем что получили уведомление "Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время."
+        String actualText = driver.findElement(By.cssSelector("[data-test-id = 'order-success'] input")).getText().trim(); // необходимо найти элемент и получить у него текст. Сохраняем полученный текст в переменную actualText. trim - обрезает лишние пробелы в тексте
         String expected = "Ваша заявка успешно отправлена! Наш менеджер свяжется с вами в ближайшее время."; // ожидаемый результат
         assertEquals(expected, actualText, "Текст сообщения не совпадает"); // сравниваем ОР и ФР
     }
