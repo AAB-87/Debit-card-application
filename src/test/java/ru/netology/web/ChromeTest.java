@@ -24,7 +24,6 @@ class ChromeTest {
 
     @BeforeEach // выполняется перед каждым тестом
     public void setupTest() { // перед каждым тестом создаём хром драйвер
-        driver = new ChromeDriver(); // инициализируем поле драйвер новым экземпляром класса
         ChromeOptions options = new ChromeOptions(); // в режиме headless мы отключаем графический интерфейс браузера (при этот все процессы браузера продолжают работать так же)
         options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--no-sandbox");
